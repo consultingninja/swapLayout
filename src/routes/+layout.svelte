@@ -2,7 +2,7 @@
 <script>
 	import Modal from '$lib/Modal.svelte';
     import Navbar from "$lib/Navbar.svelte";
-    import {layout, carousel,hero} from '../stores';
+    import {layout, carousel,hero,message} from '../stores';
 
     let layoutForm ;
     function handleFormChange(){
@@ -11,6 +11,10 @@
 
     }
 
+    let thisMessage ;
+
+    $:{ if($message !== thisMessage) message.set(thisMessage)
+    }
 
 </script>
 
@@ -18,6 +22,9 @@
 
 <div class='main-app' class:top={$layout==='top'} class:side={$layout==='side'}>
     <Navbar/>
+    {#if message !== ''}
+    <h2>{$message}</h2>
+    {/if}
     <div class="main-content">
         <slot>
         </slot>
@@ -45,6 +52,10 @@
         <div class="layout-option">
             <label for="hero">Hero</label>
             <input type="checkbox" name="hero" value="hero" on:change={()=> hero.set(!$hero)} checked={$hero} />
+        </div>
+        <div class="layout-option">
+            <label for="message">Custom Message</label>
+            <input type="text" name="message" bind:value={thisMessage} />
         </div>
 
 
