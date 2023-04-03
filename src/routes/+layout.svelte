@@ -11,11 +11,11 @@
 
     let thisMessage ;
 
-    $:{ if($message !== thisMessage && thisMessage !== '' && thisMessage !== undefined) message.set(thisMessage)
+    $:{ if($message !== thisMessage && thisMessage !== undefined) message.set(thisMessage)
     }
+    if($message) thisMessage = $message;
 
 </script>
-
 
 <div class='main-app' class:top={$layout==='top'} class:side={$layout==='side'}>
     <Navbar/>
@@ -60,7 +60,6 @@
         </div>
 
     </form>
-
 
 </Modal>
 
