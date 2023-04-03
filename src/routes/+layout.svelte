@@ -7,25 +7,23 @@
     let layoutForm ;
     function handleFormChange(){
         layout.set(layoutForm.layout.value);
-        console.log("layout is",$layout)
-
     }
 
     let thisMessage ;
 
-    $:{ if($message !== thisMessage) message.set(thisMessage)
+    $:{ if($message !== thisMessage && thisMessage !== '' && thisMessage !== undefined) message.set(thisMessage)
     }
 
 </script>
 
 
-
 <div class='main-app' class:top={$layout==='top'} class:side={$layout==='side'}>
     <Navbar/>
-    {#if message !== ''}
-    <h2>{$message}</h2>
-    {/if}
+
     <div class="main-content">
+        {#if $message}
+        <h2 class="message">{$message}</h2>
+        {/if}
         <slot>
         </slot>
     </div>
@@ -54,11 +52,12 @@
             <input type="checkbox" name="hero" value="hero" on:change={()=> hero.set(!$hero)} checked={$hero} />
         </div>
         <div class="layout-option">
-            <label for="message">Custom Message</label>
-            <input type="text" name="message" bind:value={thisMessage} />
+            <div>
+                <label for="message">Custom Message</label>
+            </div>
+
+            <textarea type="textarea" cols={20} name="message" bind:value={thisMessage} />
         </div>
-
-
 
     </form>
 
@@ -93,7 +92,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+
     }
     select{
         width: 100%;
@@ -101,4 +100,5 @@
     .layout-option{
         margin-bottom:.5em;
     }
+
 </style>
